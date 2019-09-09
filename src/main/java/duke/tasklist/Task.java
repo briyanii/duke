@@ -44,7 +44,7 @@ public abstract class Task {
      * @return The description of the task
      */
     public String getDescription() {
-        return new String(taskDescription);
+        return taskDescription;
     }
 
     /**
