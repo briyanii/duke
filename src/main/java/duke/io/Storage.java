@@ -32,42 +32,55 @@ public class Storage {
         filePath = "src/".concat(path);
     }
 
-
+    /**
+     * Helper method to write a Deadline Task to a file.
+     */
     private static void writeFromDeadline(Deadline task, FileWriter file) throws IOException {
         assert task != null;
         assert file != null;
-        file.append("D");
-        file.append(System.lineSeparator());
-        file.append(task.isComplete() ? "1" : "0");
-        file.append(System.lineSeparator());
-        file.append(task.getDescription());
-        file.append(System.lineSeparator());
-        file.append(task.time);
-        file.append(System.lineSeparator());
+        writeLinesToFile(
+                file,
+                "D",
+                task.isComplete() ? "1" : "0",
+                task.getDescription(),
+                task.time);
     }
 
+    /**
+     * Helper method to write a Event Task to a file.
+     */
     private static void writeFromEvent(Event task, FileWriter file) throws IOException {
         assert task != null;
         assert file != null;
-        file.append("E");
-        file.append(System.lineSeparator());
-        file.append(task.isComplete() ? "1" : "0");
-        file.append(System.lineSeparator());
-        file.append(task.getDescription());
-        file.append(System.lineSeparator());
-        file.append(task.time);
-        file.append(System.lineSeparator());
+        writeLinesToFile(
+                file,
+                "E",
+                task.isComplete() ? "1" : "0",
+                task.getDescription(),
+                task.time);
     }
 
+    /**
+     * Helper method to write a ToDo Task to a file.
+     */
     private static void writeFromToDo(ToDo task, FileWriter file) throws IOException {
         assert task != null;
         assert file != null;
-        file.append("T");
-        file.append(System.lineSeparator());
-        file.append(task.isComplete() ? "1" : "0");
-        file.append(System.lineSeparator());
-        file.append(task.getDescription());
-        file.append(System.lineSeparator());
+        writeLinesToFile(
+                file,
+                "T",
+                task.isComplete() ? "1" : "0",
+                task.getDescription());
+    }
+
+    /**
+     * Helper method to write multiple lines to a file.
+     */
+    private static void writeLinesToFile(FileWriter file, String... lines) throws IOException {
+        for (String line : lines) {
+            file.append(line);
+            file.append(System.lineSeparator());
+        }
     }
 
     /**
