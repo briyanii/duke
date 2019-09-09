@@ -113,23 +113,20 @@ public class Storage {
 
     private Deadline readAsDeadline(BufferedReader file) throws IOException {
         assert file != null;
-        boolean isComplete = !file.readLine().equals("0");
 
-        return new Deadline(isComplete, file.readLine(), file.readLine());
+        return new Deadline(!file.readLine().equals("0"), file.readLine(), file.readLine());
     }
 
     private ToDo readAsToDo(BufferedReader file) throws IOException {
         assert file != null;
-        boolean isComplete = !file.readLine().equals("0");
 
-        return new ToDo(isComplete, file.readLine());
+        return new ToDo(!file.readLine().equals("0"), file.readLine());
     }
 
     private Event readAsEvent(BufferedReader file) throws IOException {
         assert file != null;
-        boolean isComplete = !file.readLine().equals("0");
 
-        return new Event(isComplete, file.readLine(), file.readLine());
+        return new Event(!file.readLine().equals("0"), file.readLine(), file.readLine());
     }
 
     /**

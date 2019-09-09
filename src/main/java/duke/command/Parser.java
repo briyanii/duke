@@ -30,21 +30,18 @@ public class Parser {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
             LocalDateTime dateAndTime = LocalDateTime.parse(dateTimeString, formatter);
 
-            int day = dateAndTime.getDayOfMonth();
-            String month = dateAndTime.getMonth().toString();
-            int year = dateAndTime.getYear();
-
             StringBuilder dateTime = new StringBuilder();
 
-            dateTime.append(getIntegerOrdinal(day));
+            dateTime.append(getIntegerOrdinal(dateAndTime.getDayOfMonth()));
             dateTime.append(" of ");
-            dateTime.append(month);
+            dateTime.append(dateAndTime.getMonth().toString());
             dateTime.append(" ");
-            dateTime.append(year);
+            dateTime.append(dateAndTime.getYear());
             dateTime.append(", ");
 
             int hour = dateAndTime.getHour();
             int minute = dateAndTime.getMinute();
+
             dateTime.append((hour > 12 ? hour - 12 : hour == 0 ? 12 : hour));
             if (minute != 0) {
                 dateTime.append(":");
@@ -93,8 +90,7 @@ public class Parser {
      * @throws DukeException when an error occurs attempting to parse the input as a valid Command
      */
     public static Command parseAsCommand(String input) throws DukeException {
-        input = input.trim();
-        String[] split = input.split("\\s+");
+        String[] split = input.trim().split("\\s+");
         // was a command provided
         if (split[0].length() == 0) {
             throw new DukeMissingCommandException();
