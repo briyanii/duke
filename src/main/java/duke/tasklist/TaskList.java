@@ -43,7 +43,7 @@ public class TaskList {
      * @return The Task which was deleted from the TaskList, if the number corresponds
      * @throws DukeException when an error occurs when trying to delete a Task from the TaskList
      */
-    public Task delete(int id) throws DukeException {
+    private Task delete(int id) throws DukeException {
         assert id > 0;
         try {
             return taskList.remove(id - 1);
@@ -89,7 +89,7 @@ public class TaskList {
      * @return The Task which was marked as completed
      * @throws DukeException when an error occurs when trying to mark the task as completed
      */
-    public Task complete(int id) throws DukeException {
+    private Task complete(int id) throws DukeException {
         assert id > 0;
         try {
             return taskList.get(id - 1).complete();

@@ -29,7 +29,7 @@ public class Response {
      * @param isActive True if Duke is able to accept further Commands, false otherwise.
      * @return The Response from successfully executing a Command
      */
-    public static Response fromString(String message, boolean isActive) {
+    static Response fromString(String message, boolean isActive) {
         assert message != null;
         return new Response(message, null, isActive);
     }
@@ -45,7 +45,7 @@ public class Response {
      * @param isActive True if Duke is able to respond to further Commands, false otherwise.
      * @return The Response due to the error that occurred in Duke.
      */
-    public static Response fromError(DukeException e, boolean isActive) {
+    static Response fromError(DukeException e, boolean isActive) {
         assert e != null : "DukeException cannot be null for error Response";
         return new Response(e.getMessage(), e, isActive);
     }

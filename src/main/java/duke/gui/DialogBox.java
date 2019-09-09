@@ -26,7 +26,7 @@ import java.io.File;
  * <p>This control represents dialog from either Duke or the user. It consists of a Circle with an ImagePattern
  * fill to represent the speaker, and a Label to display the message from the speaker.</p>
  */
-public class DialogBox extends HBox {
+class DialogBox extends HBox {
     @FXML
     private Label text;
     @FXML
@@ -76,7 +76,7 @@ public class DialogBox extends HBox {
      * @param img The user's display picture
      * @return The dialog box formatted to display the user's message
      */
-    public static DialogBox getUserDialog(String userText, Image img) {
+    static DialogBox getUserDialog(String userText, Image img) {
         assert userText != null;
         assert img != null;
 
@@ -99,7 +99,7 @@ public class DialogBox extends HBox {
      * @param img Duke's display picture
      * @return The dialog box formatted to display duke's message
      */
-    public static DialogBox getDukeNormalDialog(String dukeText, Image img) {
+    static DialogBox getDukeNormalDialog(String dukeText, Image img) {
         assert dukeText != null;
         assert img != null;
 
@@ -124,7 +124,7 @@ public class DialogBox extends HBox {
      * @param img Duke's display picture
      * @return The dialog box formatted to display duke's error message
      */
-    public static DialogBox getDukeErrorDialog(String dukeErrorText, Image img) {
+    static DialogBox getDukeErrorDialog(String dukeErrorText, Image img) {
         assert dukeErrorText != null;
         assert img != null;
 

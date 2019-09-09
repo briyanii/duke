@@ -24,7 +24,7 @@ public abstract class Task {
      *
      * @return This Task which has been marked as completed
      */
-    public Task complete() {
+    Task complete() {
         taskCompletionStatus = true;
         return this;
     }

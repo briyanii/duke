@@ -15,7 +15,7 @@ public class DukeMissingArgumentException extends DukeException {
      * @param type The type of the Command which parameters were not all provided arguments
      * @param arguments The arguments provided along with the Command
      */
-    public DukeMissingArgumentException(Type type, String[] arguments) {
+    DukeMissingArgumentException(Type type, String[] arguments) {
         super(missingArguments(type, arguments));
     }
 

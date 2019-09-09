@@ -28,7 +28,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
     @FXML
-    public SimpleBooleanProperty dukeActivityStatus;
+    SimpleBooleanProperty dukeActivityStatus;
 
     private Duke duke;
 
@@ -57,7 +57,7 @@ public class MainWindow extends AnchorPane {
      *
      * @param filePath The file path from which to try to load a TaskList from
      */
-    public void loadExistingTaskList(String filePath) {
+    void loadExistingTaskList(String filePath) {
         assert filePath != null;
 
         Response response = duke.setUp(filePath);
@@ -77,7 +77,7 @@ public class MainWindow extends AnchorPane {
     /**
      * Displays the Response from activating Duke.
      */
-    public void activateDuke() {
+    void activateDuke() {
         Response response = duke.greet();
 
         assert response != null;
