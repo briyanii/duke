@@ -60,15 +60,9 @@ public class MainWindow extends AnchorPane {
 
         Response response = duke.setUp(filePath);
         if (!response.wasCausedByError()) {
-            dialogContainer.getChildren().add(
-                    DialogBox.getDukeNormalDialog(
-                            response.toString(),
-                            dukeImage));
+            display(DialogBox.getDukeNormalDialog(response.toString(), dukeImage));
         } else {
-            dialogContainer.getChildren().add(
-                    DialogBox.getDukeErrorDialog(
-                            response.toString(),
-                            dukeImage));
+            display(DialogBox.getDukeErrorDialog(response.toString(), dukeImage));
         }
     }
 
@@ -82,10 +76,7 @@ public class MainWindow extends AnchorPane {
         dukeActivityStatus.set(response.isActive());
 
         assert response.toString() != null;
-        dialogContainer.getChildren().add(
-                DialogBox.getDukeNormalDialog(
-                        response.toString(),
-                        dukeImage));
+        display(DialogBox.getDukeNormalDialog(response.toString(), dukeImage));
     }
 
 
@@ -93,12 +84,15 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         assert input != null;
+
         Response res = duke.getResponse(input);
+
         if (res.wasCausedByError()) {
             displayError(input, res.toString());
         } else {
             displayDialog(input, res.toString());
         }
+
         userInput.clear();
         dukeActivityStatus.set(res.isActive());
     }
@@ -112,7 +106,8 @@ public class MainWindow extends AnchorPane {
     private void displayDialog(String input, String response) {
         assert input != null;
         assert response != null;
-        dialogContainer.getChildren().addAll(
+
+        display(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeNormalDialog(response, dukeImage)
         );
@@ -128,9 +123,15 @@ public class MainWindow extends AnchorPane {
         assert input != null;
         assert response != null;
 
-        dialogContainer.getChildren().addAll(
+        display(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeErrorDialog(response, dukeImage)
         );
+    }
+
+    private void display(DialogBox... dialogs) {
+        for (DialogBox dialog : dialogs) {
+            dialogContainer.getChildren().add(dialog);
+        }
     }
 }
