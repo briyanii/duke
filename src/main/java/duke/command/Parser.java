@@ -47,11 +47,7 @@ public class Parser {
                 dateTime.append(":");
                 dateTime.append(minute);
             }
-            if (hour < 12) {
-                dateTime.append("am");
-            } else {
-                dateTime.append("pm");
-            }
+            dateTime.append(hour < 12 ? "am" : "pm");
 
             return dateTime.toString();
         } catch (DateTimeParseException exception) {
@@ -131,15 +127,9 @@ public class Parser {
 
         Iterator<String> delimiterIterator = Type.getDelimitersFor(commandType).iterator();
 
-        String nextDelimiter;
         int parameterCount = 0;
 
-        if (delimiterIterator.hasNext()) {
-            nextDelimiter = delimiterIterator.next();
-        } else {
-            nextDelimiter = " ";
-            // since split by whitespaces there will not be a word that is " "
-        }
+        String nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next(): " ";
 
         StringBuilder currentParameter = new StringBuilder();
 
@@ -147,18 +137,10 @@ public class Parser {
             if (i == split.length || split[i].equals(nextDelimiter)) {
                 String parameter = currentParameter.toString().trim();
 
-                if (parameter.length() > 0) {
-                    parametersProvided[parameterCount] = parameter;
-                } else {
-                    parametersProvided[parameterCount] = null;
-                }
+                parametersProvided[parameterCount] = (parameter.length() > 0) ? parameter : null;
 
                 if (i < split.length && split[i].equals(nextDelimiter)) {
-                    if (delimiterIterator.hasNext()) {
-                        nextDelimiter = delimiterIterator.next();
-                    } else {
-                        nextDelimiter = " ";
-                    }
+                    nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next(): " ";
                 }
 
                 currentParameter = new StringBuilder();
