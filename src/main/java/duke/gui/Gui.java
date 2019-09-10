@@ -52,22 +52,7 @@ public class Gui extends Application {
             // show the goodbye message as a popup that needs to be clicked to close duke
             fxmlLoader.<MainWindow>getController().dukeActivityStatus.addListener((observable, oldValue, newValue) -> {
                 if (!newValue && oldValue) {
-                    assert new File("src/main/resources/images/fatCat.png").exists() : "fatCat.png does not exist";
-                    DialogBox box = DialogBox.getDukeNormalDialog(
-                            "GoodBye! Hope to see you again!\n>>CLICK TO EXIT<<",
-                            new Image(Gui.class.getResourceAsStream("/images/fatCat.png")));
-
-                    Scene sc = new Scene(box);
-                    sc.setFill(Color.TRANSPARENT);
-                    Stage goodbyePopup = new Stage();
-                    goodbyePopup.setScene(sc);
-                    goodbyePopup.initOwner(stage);
-                    goodbyePopup.initModality(Modality.APPLICATION_MODAL);
-                    goodbyePopup.initStyle(StageStyle.TRANSPARENT);
-                    box.setOnMouseClicked((event) -> Platform.exit());
-
-                    stage.close();
-                    goodbyePopup.show();
+                    showGoodbyePopup(stage);
                 }
             });
 
@@ -75,4 +60,24 @@ public class Gui extends Application {
             e.printStackTrace();
         }
     }
+
+    private void showGoodbyePopup(javafx.stage.Stage stage) {
+        assert new java.io.File("src/main/resources/images/fatCat.png").exists() : "fatCat.png does not exist";
+        DialogBox box = DialogBox.getDukeNormalDialog(
+                "GoodBye! Hope to see you again!\n>>CLICK TO EXIT<<",
+                new javafx.scene.image.Image(Gui.class.getResourceAsStream("/images/fatCat.png")));
+
+        javafx.scene.Scene sc = new javafx.scene.Scene(box);
+        sc.setFill(Color.TRANSPARENT);
+        javafx.stage.Stage goodbyePopup = new javafx.stage.Stage();
+        goodbyePopup.setScene(sc);
+        goodbyePopup.initOwner(stage);
+        goodbyePopup.initModality(Modality.APPLICATION_MODAL);
+        goodbyePopup.initStyle(StageStyle.TRANSPARENT);
+        box.setOnMouseClicked((event) -> javafx.application.Platform.exit());
+
+        stage.close();
+        goodbyePopup.show();
+    }
+
 }
