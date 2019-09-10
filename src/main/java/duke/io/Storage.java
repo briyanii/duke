@@ -21,7 +21,13 @@ import java.io.FileNotFoundException;
  */
 public class Storage {
     private String filePath;
-
+    
+    private static final String DEADLINE_FLAG = "D";
+    private static final String EVENT_FLAG = "E";
+    private static final String TODO_FLAG = "T";
+    private static final String COMPLETE = "1";
+    private static final String INCOMPLETE = "0";
+    
     /**
      * Constructs an instance of the file handler for a specified file path.
      *
@@ -40,8 +46,8 @@ public class Storage {
         assert file != null;
         writeLinesToFile(
                 file,
-                "D",
-                task.isComplete() ? "1" : "0",
+                DEADLINE_FLAG,
+                task.isComplete() ? COMPLETE : INCOMPLETE,
                 task.getDescription(),
                 task.time);
     }
@@ -54,8 +60,8 @@ public class Storage {
         assert file != null;
         writeLinesToFile(
                 file,
-                "E",
-                task.isComplete() ? "1" : "0",
+                EVENT_FLAG,
+                task.isComplete() ? COMPLETE : INCOMPLETE,
                 task.getDescription(),
                 task.time);
     }
@@ -68,8 +74,8 @@ public class Storage {
         assert file != null;
         writeLinesToFile(
                 file,
-                "T",
-                task.isComplete() ? "1" : "0",
+                TODO_FLAG,
+                task.isComplete() ? COMPLETE : INCOMPLETE,
                 task.getDescription());
     }
 
@@ -101,13 +107,13 @@ public class Storage {
 
             for (int tasksExpected = Integer.parseInt(file.readLine()); tasksExpected > 0; tasksExpected--) {
                 switch (file.readLine()) {
-                case "D":
+                case DEADLINE_FLAG:
                     taskList.add(readAsDeadline(file));
                     break;
-                case "E":
+                case EVENT_FLAG:
                     taskList.add(readAsEvent(file));
                     break;
-                case "T":
+                case TODO_FLAG:
                     taskList.add(readAsToDo(file));
                     break;
                 default:
@@ -125,19 +131,19 @@ public class Storage {
     private Deadline readAsDeadline(BufferedReader file) throws IOException {
         assert file != null;
 
-        return new Deadline(!file.readLine().equals("0"), file.readLine(), file.readLine());
+        return new Deadline(!file.readLine().equals(INCOMPLETE), file.readLine(), file.readLine());
     }
 
     private ToDo readAsToDo(BufferedReader file) throws IOException {
         assert file != null;
 
-        return new ToDo(!file.readLine().equals("0"), file.readLine());
+        return new ToDo(!file.readLine().equals(INCOMPLETE), file.readLine());
     }
 
     private Event readAsEvent(BufferedReader file) throws IOException {
         assert file != null;
 
-        return new Event(!file.readLine().equals("0"), file.readLine(), file.readLine());
+        return new Event(!file.readLine().equals(INCOMPLETE), file.readLine(), file.readLine());
     }
 
     /**
