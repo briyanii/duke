@@ -47,7 +47,7 @@ public class TaskList {
         assert id > 0;
         try {
             return taskList.remove(id - 1);
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException exception) {
             // task id does not correspond to task in list
             throw new DukeNoCorrespondingTaskException(id);
         }
@@ -64,7 +64,7 @@ public class TaskList {
         assert id != null;
         try {
             return delete(Integer.parseInt(id));
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException exception) {
             throw new DukeIncorrectParameterTypeException("Integer", id);
         }
     }
@@ -93,7 +93,7 @@ public class TaskList {
         assert id > 0;
         try {
             return taskList.get(id - 1).complete();
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException exception) {
             throw new DukeNoCorrespondingTaskException(id);
         }
     }
@@ -109,7 +109,7 @@ public class TaskList {
         assert id != null;
         try {
             return complete(Integer.parseInt(id));
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException exception) {
             throw new DukeIncorrectParameterTypeException("Integer", id);
         }
     }

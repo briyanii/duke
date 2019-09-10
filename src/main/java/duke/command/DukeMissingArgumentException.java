@@ -26,10 +26,10 @@ public class DukeMissingArgumentException extends DukeException {
 
         StringBuilder message = new StringBuilder("The following field(s) cannot be empty:");
         ArrayList<String> parameters = type.getParameters();
-        for (int i = 0; i < type.getNumberOfArgumentsExpected(); i++) {
-            if (argumentsProvided[i] == null) {
+        for (int argumentIndex = 0; argumentIndex < type.getNumberOfArgumentsExpected(); argumentIndex++) {
+            if (argumentsProvided[argumentIndex] == null) {
                 message.append("\n>>>");
-                message.append(parameters.get(i));
+                message.append(parameters.get(argumentIndex));
             }
         }
         return message.toString();

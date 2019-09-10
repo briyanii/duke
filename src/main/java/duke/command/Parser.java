@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDateTime;
 
+import java.util.Iterator;
+
 /**
  * Static methods for parsing user input into usable information by Duke.
  */
@@ -122,7 +124,7 @@ public class Parser {
         String[] split = input.trim().split("\\s+");
         String[] argumentsProvided = new String[commandType.getNumberOfArgumentsExpected()];
 
-        java.util.Iterator<String> delimiterIterator = commandType.getDelimiters().iterator();
+        Iterator<String> delimiterIterator = commandType.getDelimiters().iterator();
 
         int parameterCount = 0;
 
@@ -130,20 +132,20 @@ public class Parser {
 
         StringBuilder currentParameter = new StringBuilder();
 
-        for (int i = 1; i <= split.length; i++) {
-            if (i == split.length || split[i].equals(nextDelimiter)) {
+        for (int wordIndex = 1; wordIndex <= split.length; wordIndex++) {
+            if (wordIndex == split.length || split[wordIndex].equals(nextDelimiter)) {
                 String parameter = currentParameter.toString().trim();
 
                 argumentsProvided[parameterCount] = (parameter.length() > 0) ? parameter : null;
 
-                if (i < split.length && split[i].equals(nextDelimiter)) {
+                if (wordIndex < split.length && split[wordIndex].equals(nextDelimiter)) {
                     nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next() : " ";
                 }
 
                 currentParameter = new StringBuilder();
                 parameterCount++;
             } else {
-                currentParameter.append(split[i]);
+                currentParameter.append(split[wordIndex]);
                 currentParameter.append(" ");
             }
         }

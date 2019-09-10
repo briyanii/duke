@@ -31,7 +31,7 @@ public class ParserTest {
                     Parser.parseDateTime("12/12/1212 0012"));
             assertEquals("23rd of JANUARY 2019, 11pm",
                     Parser.parseDateTime("23/01/2019 2300"));
-        } catch (DukeException e) {
+        } catch (DukeException dukeException) {
             fail("Should not have thrown exception");
         }
     }
@@ -102,7 +102,7 @@ public class ParserTest {
             assertTrue(Parser.parseAsCommand("bye 1") instanceof ExitCommand);
             assertTrue(Parser.parseAsCommand("list a") instanceof ShowListCommand);
             assertTrue(Parser.parseAsCommand("bye a") instanceof ExitCommand);
-        } catch (DukeException ex) {
+        } catch (DukeException dukeException) {
             fail("Should return a command ignoring the redundant arguments");
         }
     }
@@ -115,7 +115,7 @@ public class ParserTest {
         try {
             assertTrue(Parser.parseAsCommand("deadline task /by time") instanceof AddTaskCommand);
             assertTrue(Parser.parseAsCommand("event task /at time") instanceof AddTaskCommand);
-        } catch (DukeException ex) {
+        } catch (DukeException dukeException) {
             fail("Should return without formatting the time argument into dd/MM/yyyy HHmm");
         }
     }

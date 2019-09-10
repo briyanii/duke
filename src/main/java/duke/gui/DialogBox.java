@@ -46,11 +46,11 @@ class DialogBox extends HBox {
      * Constructs the dialog box.
      *
      * @param speakerText The speaker's text to be displayed in the dialog box
-     * @param img The image to be used as the display picture
+     * @param image The image to be used as the display picture
      */
-    private DialogBox(String speakerText, Image img) {
+    private DialogBox(String speakerText, Image image) {
         assert speakerText != null;
-        assert img != null;
+        assert image != null;
 
         try {
             assert new File("src/main/resources/view/DialogBox.fxml").exists() : "DialogBox.fxml file does not exist";
@@ -58,15 +58,15 @@ class DialogBox extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
         text.setText(speakerText);
         text.setPadding(LABEL_PADDING_INSET_RIGHT);
 
         // formats the display picture
-        icon.setFill(new ImagePattern(img));
+        icon.setFill(new ImagePattern(image));
     }
 
     // mirrors the dialog box elements orientation
@@ -82,14 +82,14 @@ class DialogBox extends HBox {
      * Returns a dialog box formatted to display a message from the user.
      *
      * @param userText The user's message
-     * @param img The user's display picture
+     * @param image The user's display picture
      * @return The dialog box formatted to display the user's message
      */
-    static DialogBox getUserDialog(String userText, Image img) {
+    static DialogBox getUserDialog(String userText, Image image) {
         assert userText != null;
-        assert img != null;
+        assert image != null;
 
-        DialogBox user = new DialogBox(userText, img);
+        DialogBox user = new DialogBox(userText, image);
 
         // sets the background to a green rounded corner box
         user.setBackground(
@@ -109,14 +109,14 @@ class DialogBox extends HBox {
      * Returns a dialog box formatted to display messages from Duke.
      *
      * @param dukeText Duke's message
-     * @param img Duke's display picture
+     * @param image Duke's display picture
      * @return The dialog box formatted to display duke's message
      */
-    static DialogBox getDukeNormalDialog(String dukeText, Image img) {
+    static DialogBox getDukeNormalDialog(String dukeText, Image image) {
         assert dukeText != null;
-        assert img != null;
+        assert image != null;
 
-        DialogBox duke = new DialogBox(dukeText, img);
+        DialogBox duke = new DialogBox(dukeText, image);
 
         // sets the background to a blue rounded corner box
         duke.setBackground(
@@ -138,14 +138,14 @@ class DialogBox extends HBox {
      * Returns a dialog box formatted to display error messages from Duke.
      *
      * @param dukeErrorText Duke's error message
-     * @param img Duke's display picture
+     * @param image Duke's display picture
      * @return The dialog box formatted to display duke's error message
      */
-    static DialogBox getDukeErrorDialog(String dukeErrorText, Image img) {
+    static DialogBox getDukeErrorDialog(String dukeErrorText, Image image) {
         assert dukeErrorText != null;
-        assert img != null;
+        assert image != null;
 
-        DialogBox duke = new DialogBox(dukeErrorText, img);
+        DialogBox duke = new DialogBox(dukeErrorText, image);
 
         // sets the background to a red rounded corner box
         duke.setBackground(

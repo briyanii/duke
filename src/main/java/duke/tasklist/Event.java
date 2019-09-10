@@ -22,7 +22,7 @@ public class Event extends Task {
         assert description != null;
         try {
             this.time = Parser.parseDateTime(time);
-        } catch (DukeException e) {
+        } catch (DukeException dukeException) {
             this.time = time;
         }
     }
@@ -42,7 +42,7 @@ public class Event extends Task {
 
         try {
             this.time = Parser.parseDateTime(time);
-        } catch (DukeException e) {
+        } catch (DukeException dukeException) {
             this.time = time;
         }
         taskCompletionStatus = isComplete;

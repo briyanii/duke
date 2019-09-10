@@ -27,7 +27,7 @@ public class Gui extends Application {
     private Duke duke = new Duke();
 
     @Override
-    public void start(Stage stage) {
+    public void start(javafx.stage.Stage stage) {
         try {
             assert new File("src/main/resources/view/MainWindow.fxml").exists() : "MainWindow.fxml does not exist";
             FXMLLoader fxmlLoader = new FXMLLoader(Gui.class.getResource("/view/MainWindow.fxml"));
@@ -55,8 +55,8 @@ public class Gui extends Application {
                 }
             });
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -68,7 +68,7 @@ public class Gui extends Application {
 
         Scene sc = new javafx.scene.Scene(box);
         sc.setFill(Color.TRANSPARENT);
-        Stage goodbyePopup = new javafx.stage.Stage();
+        Stage goodbyePopup = new Stage();
         goodbyePopup.setScene(sc);
         goodbyePopup.initOwner(stage);
         goodbyePopup.initModality(Modality.APPLICATION_MODAL);

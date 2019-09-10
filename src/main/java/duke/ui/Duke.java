@@ -60,17 +60,17 @@ public class Duke {
             response = Response.fromString(
                     String.format("Your TaskList was successfully loaded from:\n%s", taskListPath),
                     isActive);
-        } catch (DukeException e0) {
-            taskList = new TaskList();
+        } catch (DukeException dukeException0) {
+            taskList = new duke.tasklist.TaskList();
             // try write to the path
             try {
                 storage.save(taskList);
                 // path is valid
-                response = Response.fromError(e0, isActive);
-            } catch (DukeException e1) {
+                response = Response.fromError(dukeException0, isActive);
+            } catch (DukeException dukeException1) {
                 isActive = false;
                 // path is invalid
-                response = Response.fromError(e1, isActive);
+                response = Response.fromError(dukeException1, isActive);
             }
         }
         return response;
@@ -89,8 +89,8 @@ public class Duke {
         }
         try {
             return Response.fromString(executeCommand(Parser.parseAsCommand(input)), isActive);
-        } catch (DukeException e) {
-            return Response.fromError(e, isActive);
+        } catch (DukeException dukeException) {
+            return Response.fromError(dukeException, isActive);
         }
     }
 
@@ -146,14 +146,14 @@ public class Duke {
         case COMMAND_ADD_DEADLINE:
             try {
                 task = new Deadline(parameters[0], Parser.parseDateTime(parameters[1]));
-            } catch (DukeException ex) {
+            } catch (DukeException dukeException) {
                 task = new Deadline(parameters[0], parameters[1]);
             }
             break;
         case COMMAND_ADD_EVENT:
             try {
                 task = new Event(parameters[0], Parser.parseDateTime(parameters[1]));
-            } catch (DukeException e) {
+            } catch (DukeException dukeException) {
                 task = new Event(parameters[0], parameters[1]);
             }
             break;

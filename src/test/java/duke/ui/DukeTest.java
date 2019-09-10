@@ -29,8 +29,8 @@ public class DukeTest {
             FileWriter temp = new FileWriter("src/test/resources/save/DukeTestSave01.txt");
             temp.write("0");
             temp.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
     }

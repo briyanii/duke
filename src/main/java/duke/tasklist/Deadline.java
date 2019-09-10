@@ -22,7 +22,7 @@ public class Deadline extends Task {
         assert time != null : "Deadline time cannot be null";
         try {
             this.time = Parser.parseDateTime(time);
-        } catch (DukeException e) {
+        } catch (DukeException dukeException) {
             this.time = time;
         }
     }
@@ -40,7 +40,7 @@ public class Deadline extends Task {
         assert time != null : "Deadline time cannot be null";
         try {
             this.time = Parser.parseDateTime(time);
-        } catch (DukeException e) {
+        } catch (DukeException dukeException) {
             this.time = time;
         }
         taskCompletionStatus = isComplete;

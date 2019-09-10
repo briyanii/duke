@@ -121,9 +121,9 @@ public class Storage {
                 }
             }
             return taskList;
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException exception) {
             throw new DukeInvalidFilePathException(filePath);
-        } catch (IOException | NumberFormatException ex) {
+        } catch (IOException | NumberFormatException exception) {
             throw new DukeCorruptFileException(filePath);
         }
     }

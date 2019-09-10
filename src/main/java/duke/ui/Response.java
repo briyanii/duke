@@ -41,13 +41,13 @@ public class Response {
      * <p>The Response contains the error message from Duke after an error occurs after user input, and
      * the activity status of Duke at the time of the Response.</p>
      *
-     * @param e The DukeException thrown when the error occurs
+     * @param dukeException The DukeException thrown when the error occurs
      * @param isActive True if Duke is able to respond to further Commands, false otherwise.
      * @return The Response due to the error that occurred in Duke.
      */
-    static Response fromError(DukeException e, boolean isActive) {
-        assert e != null : "DukeException cannot be null for error Response";
-        return new Response(e.getMessage(), e, isActive);
+    static Response fromError(duke.error.DukeException dukeException, boolean isActive) {
+        assert dukeException != null : "DukeException cannot be null for error Response";
+        return new Response(dukeException.getMessage(), dukeException, isActive);
     }
 
     /**
