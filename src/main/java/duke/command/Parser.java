@@ -87,49 +87,48 @@ public class Parser {
      */
     public static Command parseAsCommand(String input) throws DukeException {
         String[] split = input.trim().split("\\s+");
-        // was a command provided
+
         if (split[0].length() == 0) {
             throw new DukeMissingCommandException();
         }
-        // is the command valid
 
-        Type commandType;
+        Type commandType = extractCommandType(input);
 
-        switch (split[0]) {
-        case "list":
-            return new ShowListCommand();
-        case "bye":
+        if (commandType == Type.COMMAND_EXIT) {
             return new ExitCommand();
-        case "todo":
-            commandType = Type.COMMAND_ADD_TODO;
-            break;
-        case "event":
-            commandType = Type.COMMAND_ADD_EVENT;
-            break;
-        case "deadline":
-            commandType = Type.COMMAND_ADD_DEADLINE;
-            break;
-        case "delete":
-            commandType = Type.COMMAND_DELETE_TASK;
-            break;
-        case "done":
-            commandType = Type.COMMAND_COMPLETE_TASK;
-            break;
-        case "find":
-            commandType = Type.COMMAND_SEARCH;
-            break;
-        default:
-            throw new DukeUnknownCommandException();
+        } else if (commandType == Type.COMMAND_SHOW_LIST) {
+            return new ShowListCommand();
         }
 
-        // if the command requires further parameters
-        String[] parametersProvided = new String[Type.getNumberOfParametersExpectedFor(commandType)];
+        String[] arguments = extractArguments(input, commandType);
 
-        Iterator<String> delimiterIterator = Type.getDelimitersFor(commandType).iterator();
+        switch (commandType) {
+        case COMMAND_DELETE_TASK:
+            return new DeleteTaskCommand(arguments[0]);
+        case COMMAND_COMPLETE_TASK:
+            return new CompleteTaskCommand(arguments[0]);
+        case COMMAND_SEARCH:
+            return new SearchCommand(arguments[0]);
+        case COMMAND_ADD_TODO:
+            //Fallthrough
+        case COMMAND_ADD_DEADLINE:
+            //Fallthrough
+        case COMMAND_ADD_EVENT:
+            return new AddTaskCommand(commandType, arguments);
+        default:
+            return null; //unreachable
+        }
+    }
+
+    private static String[] extractArguments(String input, Type commandType) throws DukeMissingArgumentException {
+        String[] split = input.trim().split("\\s+");
+        String[] argumentsProvided = new String[Type.getNumberOfParametersExpectedFor(commandType)];
+
+        java.util.Iterator<String> delimiterIterator = Type.getDelimitersFor(commandType).iterator();
 
         int parameterCount = 0;
 
-        String nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next(): " ";
+        String nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next() : " ";
 
         StringBuilder currentParameter = new StringBuilder();
 
@@ -137,10 +136,10 @@ public class Parser {
             if (i == split.length || split[i].equals(nextDelimiter)) {
                 String parameter = currentParameter.toString().trim();
 
-                parametersProvided[parameterCount] = (parameter.length() > 0) ? parameter : null;
+                argumentsProvided[parameterCount] = (parameter.length() > 0) ? parameter : null;
 
                 if (i < split.length && split[i].equals(nextDelimiter)) {
-                    nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next(): " ";
+                    nextDelimiter = (delimiterIterator.hasNext()) ? delimiterIterator.next() : " ";
                 }
 
                 currentParameter = new StringBuilder();
@@ -151,27 +150,34 @@ public class Parser {
             }
         }
 
-        for (String parameter : parametersProvided) {
+        for (String parameter : argumentsProvided) {
             if (parameter == null) {
-                throw new DukeMissingArgumentException(commandType, parametersProvided);
+                throw new DukeMissingArgumentException(commandType, argumentsProvided);
             }
         }
+        return argumentsProvided;
+    }
 
-        switch (commandType) {
-        case COMMAND_DELETE_TASK:
-            return new DeleteTaskCommand(parametersProvided[0]);
-        case COMMAND_COMPLETE_TASK:
-            return new CompleteTaskCommand(parametersProvided[0]);
-        case COMMAND_SEARCH:
-            return new SearchCommand(parametersProvided[0]);
-        case COMMAND_ADD_TODO:
-            //Fallthrough
-        case COMMAND_ADD_DEADLINE:
-            //Fallthrough
-        case COMMAND_ADD_EVENT:
-            return new AddTaskCommand(commandType, parametersProvided);
+    private static Type extractCommandType(String input) throws DukeUnknownCommandException {
+        switch (input.trim().split("\\s+")[0]) {
+        case "list":
+            return Type.COMMAND_SHOW_LIST;
+        case "bye":
+            return Type.COMMAND_EXIT;
+        case "todo":
+            return Type.COMMAND_ADD_TODO;
+        case "event":
+            return Type.COMMAND_ADD_EVENT;
+        case "deadline":
+            return Type.COMMAND_ADD_DEADLINE;
+        case "delete":
+            return Type.COMMAND_DELETE_TASK;
+        case "done":
+            return Type.COMMAND_COMPLETE_TASK;
+        case "find":
+            return Type.COMMAND_SEARCH;
         default:
-            return null; //unreachable
+            throw new DukeUnknownCommandException();
         }
     }
 }
