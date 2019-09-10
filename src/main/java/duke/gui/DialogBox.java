@@ -32,6 +32,16 @@ class DialogBox extends HBox {
     @FXML
     private Circle icon;
 
+    private static final Insets DIALOGBOX_BACKGROUND_INSET = new Insets(5,37.5,5,37.5);
+    private static final Insets LABEL_PADDING_INSET_LEFT = new Insets(0,42.5,0,5);
+    private static final Insets LABEL_PADDING_INSET_RIGHT = new Insets(5,5,5,42.5);
+
+    private static final CornerRadii DIALOGBOX_BACKGROUND_RADII_TEN = new CornerRadii(10);
+
+    private static final Color DIALOGBOX_BACKGROUND_RED = Color.rgb(100,0,0);
+    private static final Color DIALOGBOX_BACKGROUND_BLUE = Color.rgb(0,0,100);
+    private static final Color DIALOGBOX_BACKGROUND_GREEN = Color.rgb(0,100,0);
+
     /**
      * Constructs the dialog box.
      *
@@ -53,8 +63,7 @@ class DialogBox extends HBox {
         }
 
         text.setText(speakerText);
-        text.setPadding(new Insets(0,5,0,42.5));
-        setHeight(text.getHeight() +  10);
+        text.setPadding(LABEL_PADDING_INSET_RIGHT);
 
         // formats the display picture
         icon.setFill(new ImagePattern(img));
@@ -63,7 +72,7 @@ class DialogBox extends HBox {
     // mirrors the dialog box elements orientation
     private void flip() {
         this.setAlignment(Pos.CENTER_LEFT);
-        text.setPadding(new Insets(0,42.5,0,5));
+        text.setPadding(LABEL_PADDING_INSET_LEFT);
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         FXCollections.reverse(tmp);
         this.getChildren().setAll(tmp);
@@ -86,9 +95,13 @@ class DialogBox extends HBox {
         user.setBackground(
                 new Background(
                         new BackgroundFill(
-                                Color.rgb(0,100, 0),
-                                new CornerRadii(10),
-                                new Insets(5,37.5,5,37.5))));
+                                DIALOGBOX_BACKGROUND_GREEN,
+                                DIALOGBOX_BACKGROUND_RADII_TEN,
+                                DIALOGBOX_BACKGROUND_INSET
+                        )
+                )
+        );
+
         return user;
     }
 
@@ -109,9 +122,13 @@ class DialogBox extends HBox {
         duke.setBackground(
                 new Background(
                         new BackgroundFill(
-                                Color.rgb(0,0, 100),
-                                new CornerRadii(10),
-                                new Insets(5,37.5,5,37.5))));
+                                DIALOGBOX_BACKGROUND_BLUE,
+                                DIALOGBOX_BACKGROUND_RADII_TEN,
+                                DIALOGBOX_BACKGROUND_INSET
+                        )
+                )
+        );
+
         duke.flip();
 
         return duke;
@@ -134,9 +151,13 @@ class DialogBox extends HBox {
         duke.setBackground(
                 new Background(
                         new BackgroundFill(
-                                Color.rgb(100,0,0),
-                                new CornerRadii(10),
-                                new Insets(5,37.5,5,37.5))));
+                                DIALOGBOX_BACKGROUND_RED,
+                                DIALOGBOX_BACKGROUND_RADII_TEN,
+                                DIALOGBOX_BACKGROUND_INSET
+                        )
+                )
+        );
+
         duke.flip();
 
         return duke;
