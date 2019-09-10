@@ -112,18 +112,22 @@ public class Duke {
     private String executeCommand(Command command) throws DukeException {
         assert command != null;
         // all commands passed to this method have all required parameter non-empty
-        switch (command.getClass().getSimpleName()) {
-        case "AddTaskCommand":
+        switch (command.getType()) {
+        case COMMAND_ADD_TODO:
+            //Fallthrough
+        case COMMAND_ADD_EVENT:
+            //Fallthrough
+        case COMMAND_ADD_DEADLINE:
             return executeAddTaskCommand((AddTaskCommand) command);
-        case "CompleteTaskCommand":
+        case COMMAND_COMPLETE_TASK:
             return executeCompleteTaskCommand((CompleteTaskCommand) command);
-        case "DeleteTaskCommand":
+        case COMMAND_DELETE_TASK:
             return executeDeleteTaskCommand((DeleteTaskCommand) command);
-        case "SearchCommand":
+        case COMMAND_SEARCH:
             return executeSearchCommand((SearchCommand) command);
-        case "ShowListCommand":
+        case COMMAND_SHOW_LIST:
             return executeShowListCommand();
-        case "ExitCommand":
+        case COMMAND_EXIT:
             return executeExitCommand();
         default:
             throw new DukeUnknownCommandException();
@@ -132,10 +136,10 @@ public class Duke {
 
     private String executeAddTaskCommand(AddTaskCommand command) throws DukeException {
         assert command != null;
-        String[] parameters = Command.getArgumentsUsed(command);
+        String[] parameters = command.getArgumentsUsed();
         Task task;
 
-        switch (Command.getTypeOf(command)) {
+        switch (command.getType()) {
         case COMMAND_ADD_TODO:
             task = new ToDo(parameters[0]);
             break;
@@ -171,7 +175,7 @@ public class Duke {
     private String executeCompleteTaskCommand(CompleteTaskCommand command) throws DukeException {
         assert command != null;
 
-        String[] parameters = Command.getArgumentsUsed(command);
+        String[] parameters = command.getArgumentsUsed();
 
         Task task = taskList.complete(parameters[0]);
 
@@ -182,7 +186,7 @@ public class Duke {
     private String executeDeleteTaskCommand(DeleteTaskCommand command) throws DukeException {
         assert command != null;
 
-        String[] parameters = Command.getArgumentsUsed(command);
+        String[] parameters = command.getArgumentsUsed();
 
         Task task = taskList.delete(parameters[0]);
 
@@ -196,7 +200,7 @@ public class Duke {
     private String executeSearchCommand(SearchCommand command) {
         assert command != null;
 
-        String[] parameters = Command.getArgumentsUsed(command);
+        String[] parameters = command.getArgumentsUsed();
         ArrayList<Task> results = taskList.search(parameters[0]);
         int resultsCount = results.size();
 

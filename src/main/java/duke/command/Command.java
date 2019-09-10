@@ -26,25 +26,21 @@ public abstract class Command {
     }
 
     /**
-     * Returns the enumerated Type of the Command.
+     * Returns the arguments provided along with the Command.
      *
-     * @param command The Command of which the enumerated Type is needed from.
-     * @return The enumerated Type of the command.
+     * @return The arguments provided along with the Command, in a String[].
      */
-    public static Type getTypeOf(Command command) {
-        assert command != null;
-        return command.type;
+    public String[] getArgumentsUsed() {
+        return arguments;
     }
 
     /**
-     * Returns the arguments provided along with the Command.
+     * Returns the enumerated Type of the Command.
      *
-     * @param command The Command from which the arguments used are needed.
-     * @return The arguments provided along with the Command, in a String[].
+     * @return The enumerated Type of the command.
      */
-    public static String[] getArgumentsUsed(Command command) {
-        assert command != null;
-        return command.arguments;
+    public Type getType() {
+        return type;
     }
 }
 
