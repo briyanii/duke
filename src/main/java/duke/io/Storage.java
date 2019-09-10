@@ -99,9 +99,7 @@ public class Storage {
             // populate tasklist
             TaskList taskList = new TaskList();
 
-            int tasksExpected = Integer.parseInt(file.readLine());
-            while (tasksExpected > 0) {
-                tasksExpected--;
+            for (int tasksExpected = Integer.parseInt(file.readLine()); tasksExpected > 0; tasksExpected--) {
                 switch (file.readLine()) {
                 case "D":
                     taskList.add(readAsDeadline(file));
