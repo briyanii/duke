@@ -38,36 +38,30 @@ public enum Type {
     private ArrayList<String> delimiters;
 
     /**
-     * Returns the number of parameters expected for the Command of the Type provided.
+     * Returns an ArrayList of the delimiters used, if any, to to separate arguments in this a Command of this Type.
      *
-     * @param type The type of the Command for which the number of parameters expected is needed
-     * @return The number of parameters expected for a Command of the Type.
+     * @return An ArrayList of the delimiters used if any, to to separate arguments in this a Command of this Type.
      */
-    public static int getNumberOfParametersExpectedFor(Type type) {
-        assert type != null;
-        return type.parametersExpected;
+    public ArrayList<String> getDelimiters() {
+        return new ArrayList<String>(delimiters);
     }
 
     /**
-     * Returns an ArrayList of the parameter names of the Command of the given Type.
+     * Returns an ArrayList of the parameter names, if any, of Command of this Type.
      *
-     * @param type The Type of command which the names of the parameters is required from
-     * @return An ArrayList of the parameter names
+     * @return An ArrayList of the parameter names, if any, of Command of this Type.
      */
-    public static ArrayList<String> getParametersFor(Type type) {
-        assert type != null;
-        return new ArrayList<String>(type.parameters);
+    public ArrayList<String> getParameters() {
+        return new ArrayList<String>(parameters);
     }
 
     /**
-     * Returns an ArrayList of the delimiters used to separate multiple arguments for Commands of
-     * the Type provided.
+     * Returns the number of arguments expected for a Command of this Type.
      *
-     * @param type The Type of the Command
-     * @return An ArrayList of the delimiters
+     * @return The number of arguments expected for a Command of the Type.
      */
-    public static ArrayList<String> getDelimitersFor(Type type) {
-        assert type != null;
-        return new ArrayList<String>(type.delimiters);
+    public int getNumberOfArgumentsExpected() {
+        return parametersExpected;
     }
+
 }

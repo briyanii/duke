@@ -2,8 +2,6 @@ package duke.command;
 
 import duke.error.DukeException;
 
-import java.util.Iterator;
-
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDateTime;
@@ -122,9 +120,9 @@ public class Parser {
 
     private static String[] extractArguments(String input, Type commandType) throws DukeMissingArgumentException {
         String[] split = input.trim().split("\\s+");
-        String[] argumentsProvided = new String[Type.getNumberOfParametersExpectedFor(commandType)];
+        String[] argumentsProvided = new String[commandType.getNumberOfArgumentsExpected()];
 
-        java.util.Iterator<String> delimiterIterator = Type.getDelimitersFor(commandType).iterator();
+        java.util.Iterator<String> delimiterIterator = commandType.getDelimiters().iterator();
 
         int parameterCount = 0;
 
